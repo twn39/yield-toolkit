@@ -1,0 +1,20 @@
+{
+  "name": "yield",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "minimist": "^1.2.5",
+    "plop": "^3.0.4"
+  },
+  "bin": {
+    "yield": "./index.js"
+  },
+  "preferGlobal": true,
+  "scripts": {
+    "start": "plop"
+  },
+  "author": "",
+  "license": "ISC"
+}
