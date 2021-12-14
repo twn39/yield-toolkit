@@ -1,7 +1,7 @@
 {
-  "name": "yield",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@yield/cli",
+  "version": "0.1.0",
+  "description": "A cli for generate web template.",
   "main": "index.js",
   "type": "module",
   "dependencies": {
@@ -15,6 +15,6 @@
   "scripts": {
     "start": "plop"
   },
-  "author": "",
+  "author": "Curry Tang <twn39@163.com>",
   "license": "ISC"
 }
