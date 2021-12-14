@@ -60,11 +60,6 @@ export default function (plop) {
       let actions = [];
       if (data['framework'] === 'React') {
         actions.push({
-          type: 'add',
-          path: 'webpack.config.js',
-          templateFile: 'templates/webpack/react.hbs.js'
-        });
-        actions.push({
           type: 'modify',
           path: 'package.json',
           transform: reactTransform,
@@ -72,16 +67,26 @@ export default function (plop) {
       }
       if (data['framework'] === 'Vue') {
         actions.push({
-          type: 'add',
-          path: 'webpack.config.js',
-          templateFile: 'templates/webpack/vue.hbs.js'
-        });
-        actions.push({
           type: 'modify',
           path: 'package.json',
           transform: vueTransform,
         });
       }
+      actions.push({
+        type: 'add',
+        path: 'webpack.config.js',
+        templateFile: 'templates/webpack/{{lowerCase framework}}.hbs.js'
+      });
+      actions.push({
+        type: 'add',
+        path: '.babelrc',
+        templateFile: 'templates/webpack/{{lowerCase framework}}.babelrc.hbs'
+      });
+      actions.push({
+        type: 'add',
+        path: '.tsconfig.json',
+        templateFile: 'templates/webpack/{{lowerCase framework}}.tsconfig.json'
+      });
       return actions;
     },
   });
