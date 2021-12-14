@@ -50,14 +50,12 @@ export default function (plop) {
   });
   plop.setGenerator('webpack', {
     description: 'add webpack configure file',
-    prompts: [
-      {
-        type: 'list',
-        name: 'framework',
-        message: 'which framework for ?',
-        choices: ["React", "Vue"]
-      }
-    ],
+    prompts: [{
+      type: 'list',
+      name: 'framework',
+      message: 'which framework for ?',
+      choices: ["React", "Vue"]
+    }],
     actions: data => {
       let actions = [];
       if (data['framework'] === 'React') {
@@ -86,5 +84,52 @@ export default function (plop) {
       }
       return actions;
     },
+  });
+  plop.setGenerator('react', {
+    description: 'add react file',
+    prompts: [
+      {
+        type: 'list',
+        name: 'module',
+        message: 'select module please',
+        choices: ['component', 'redux']
+      },
+      {
+        type: 'input',
+        name: 'name',
+        message: 'enter file name please',
+      },
+      {
+        type: 'list',
+        name: 'type',
+        message: 'select type please',
+        choices: ['functional', 'class']
+      },
+      {
+        type: 'list',
+        name: 'format',
+        message: 'select format please',
+        choices: ['js', 'tsx']
+      },
+    ],
+    actions: data => {
+      let actions = [];
+      actions.push({
+        type: 'add',
+        path: '{{pascalCase name}}.{{format}}',
+        templateFile: 'templates/react/{{module}}.{{type}}.{{format}}.hbs'
+      });
+      return actions;
+    }
+  });
+  plop.setGenerator('vue', {
+    description: 'add react file',
+    prompts: [{
+      type: 'list',
+      name: 'format',
+      message: 'select format please',
+      choices: ['js', 'tsx'],
+    },],
+    actions: [],
   });
 };
