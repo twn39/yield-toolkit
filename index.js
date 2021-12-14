@@ -29,4 +29,10 @@ Plop.prepare({
   configPath: path.join(__dirname, 'plopfile.js'),
   preload: argv.preload || [],
   completion: argv.completion
-}, env => Plop.execute(env, run));
+}, env => Plop.execute(env, env => {
+  const options = {
+    ...env,
+    dest: process.cwd()
+  }
+  return run(options, undefined, true)
+}));
