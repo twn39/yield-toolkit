@@ -13,11 +13,14 @@ npm i -g yield-toolkit
 yarn install command
 
 ```shell
-yarn add yield-toolkit global
+yarn add yield-toolkit --global
 ```
 
 ## Usage
 
+Use arrow to select right option, yield will do the rest.
+
+![yield-toolkit screen](yield-toolkit.png)
 
 ## Contributing
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
