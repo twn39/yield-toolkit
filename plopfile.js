@@ -24,6 +24,19 @@ export default function (plop) {
       templateFile: 'templates/license/{{lowerCase license}}.hbs'
     }]
   });
+  plop.setGenerator('README', {
+    description: 'add README file',
+    prompts: [{
+      type: 'input',
+      name: 'project',
+      message: 'project name please'
+    }],
+    actions: [{
+      type: 'add',
+      path: 'README.md',
+      templateFile: 'templates/git/readme.hbs'
+    }]
+  });
   plop.setGenerator('gitignore', {
     description: 'add gitignore file',
     prompts: [],
@@ -90,15 +103,9 @@ export default function (plop) {
       return actions;
     },
   });
-  plop.setGenerator('react', {
-    description: 'add react file',
+  plop.setGenerator('react component', {
+    description: 'generate a react component',
     prompts: [
-      {
-        type: 'list',
-        name: 'module',
-        message: 'select module please',
-        choices: ['component', 'redux']
-      },
       {
         type: 'input',
         name: 'name',
@@ -122,12 +129,12 @@ export default function (plop) {
       actions.push({
         type: 'add',
         path: '{{pascalCase name}}.{{format}}',
-        templateFile: 'templates/react/{{module}}.{{type}}.{{format}}.hbs'
+        templateFile: 'templates/react/component.{{type}}.{{format}}.hbs'
       });
       return actions;
     }
   });
-  plop.setGenerator('vue', {
+  plop.setGenerator('vue component', {
     description: 'add react file',
     prompts: [{
       type: 'list',

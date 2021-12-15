@@ -1,6 +1,6 @@
 {
   "name": "yield-toolkit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A cli for generate web template.",
   "main": "index.js",
   "type": "module",
@@ -16,5 +16,5 @@
     "start": "plop"
   },
   "author": "Curry Tang <twn39@163.com>",
-  "license": "ISC"
+  "license": "MIT"
 }
