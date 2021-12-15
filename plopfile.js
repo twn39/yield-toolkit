@@ -1,7 +1,7 @@
 import {reactTransform, vueTransform} from "./transform/webpack.js";
 
 export default function (plop) {
-  plop.setWelcomeMessage('Yield toolkit.');
+  plop.setWelcomeMessage('Yield toolkit.\r\n');
   plop.setGenerator('license', {
     description: 'add license',
     prompts: [{
@@ -38,7 +38,7 @@ export default function (plop) {
     }]
   });
   plop.setGenerator('gitignore', {
-    description: 'add gitignore file',
+    description: 'add .gitignore file',
     prompts: [],
     actions: [{
       type: 'add',
@@ -109,7 +109,7 @@ export default function (plop) {
       {
         type: 'input',
         name: 'name',
-        message: 'enter file name please',
+        message: 'react component name please',
       },
       {
         type: 'list',
@@ -135,7 +135,7 @@ export default function (plop) {
     }
   });
   plop.setGenerator('vue component', {
-    description: 'add react file',
+    description: 'add vue component file',
     prompts: [{
       type: 'list',
       name: 'format',

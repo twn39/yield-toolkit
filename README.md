@@ -18,6 +18,12 @@ yarn add yield-toolkit --global
 
 ## Usage
 
+Just simple command:
+
+```shell
+~ yield
+```
+
 Use arrow to select right option, yield will do the rest.
 
 ![yield-toolkit screen](yield-toolkit.png)
