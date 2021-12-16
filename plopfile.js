@@ -77,6 +77,16 @@ export default function (plop) {
           path: 'package.json',
           transform: reactTransform,
         });
+        actions.push({
+          type: 'add',
+          path: 'src/App.tsx',
+          templateFile: 'templates/webpack/{{lowerCase framework}}/App.tsx.hbs'
+        });
+        actions.push({
+          type: 'add',
+          path: 'src/index.tsx',
+          templateFile: 'templates/webpack/{{lowerCase framework}}/index.tsx.hbs'
+        });
       }
       if (data['framework'] === 'Vue') {
         actions.push({
@@ -88,17 +98,17 @@ export default function (plop) {
       actions.push({
         type: 'add',
         path: 'webpack.config.js',
-        templateFile: 'templates/webpack/{{lowerCase framework}}.hbs.js'
+        templateFile: 'templates/webpack/{{lowerCase framework}}/{{lowerCase framework}}.hbs.js'
       });
       actions.push({
         type: 'add',
         path: '.babelrc',
-        templateFile: 'templates/webpack/{{lowerCase framework}}.babelrc.hbs'
+        templateFile: 'templates/webpack/{{lowerCase framework}}/{{lowerCase framework}}.babelrc.hbs'
       });
       actions.push({
         type: 'add',
         path: '.tsconfig.json',
-        templateFile: 'templates/webpack/{{lowerCase framework}}.tsconfig.json'
+        templateFile: 'templates/webpack/{{lowerCase framework}}/{{lowerCase framework}}.tsconfig.json'
       });
       return actions;
     },
