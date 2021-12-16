@@ -5,7 +5,11 @@
   "private": true,
   "workspace": [
     {{#each dir}}
-      "{{this}}"
+      {{#if @last}}
+    "{{this}}"
+      {{else}}
+    "{{this}}",
+      {{/if}}
     {{/each}}
   ],
   "author": "",
