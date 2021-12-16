@@ -28,6 +28,8 @@ Use arrow to select right option, yield will do the rest.
 
 ![yield-toolkit screen](yield-toolkit.png)
 
+> notes: if you select `webpack` to create web application, please run `npm init` first.
+
 ## Contributing
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 
