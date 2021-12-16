@@ -83,4 +83,45 @@ export function vueTransform(data) {
   return JSON.stringify(data, null, 2);
 }
 
+export function preactTransform(data) {
+  data = JSON.parse(data);
+  data['scripts'] = {
+    ...data['scripts'],
+    "clean": "rm dist/bundle.js",
+    "build:dev": "webpack --mode development",
+    "build:prod": "webpack --mode production",
+    "start": "webpack serve --hot --mode development"
+  };
+  data['dependencies'] = {
+    ...data['dependencies'],
+    "preact": "^10.3.1",
+    "preact-compat": "^3.19.0",
+    "preact-render-to-string": "^5.1.4",
+    "preact-router": "^3.2.1"
+  };
+  data['devDependencies'] = {
+    ...data['devDependencies'],
+    "@babel/core": "^7.16.5",
+    "@babel/plugin-transform-react-jsx": "^7.16.5",
+    "@babel/preset-react": "^7.16.5",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.5.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.4.5",
+    "node-sass": "^6.0.1",
+    "sass-loader": "^12.4.0",
+    "style-loader": "^3.3.1",
+    "stylus": "^0.55.0",
+    "stylus-loader": "^6.2.0",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.4",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.6.0"
+  }
+  return JSON.stringify(data, null, 2);
+}
+
 

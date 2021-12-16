@@ -1,4 +1,4 @@
-import {reactTransform, vueTransform} from "./transform/webpack.js";
+import {preactTransform, reactTransform, vueTransform} from "./transform/webpack.js";
 
 export default function (plop) {
   plop.setWelcomeMessage('Yield toolkit.\r\n');
@@ -87,8 +87,8 @@ export default function (plop) {
     prompts: [{
       type: 'list',
       name: 'framework',
-      message: 'which framework for ?',
-      choices: ["React", "Vue"]
+      message: 'select framework',
+      choices: ["React", "Vue", "Preact"]
     }],
     actions: data => {
       let actions = [];
@@ -124,6 +124,23 @@ export default function (plop) {
           type: 'add',
           path: 'src/index.js',
           templateFile: 'templates/webpack/{{lowerCase framework}}/index.js.hbs'
+        });
+      }
+      if (data['framework'] === 'Preact') {
+        actions.push({
+          type: 'modify',
+          path: 'package.json',
+          transform: preactTransform,
+        });
+        actions.push({
+          type: 'add',
+          path: 'src/App.tsx',
+          templateFile: 'templates/webpack/{{lowerCase framework}}/App.hbs'
+        });
+        actions.push({
+          type: 'add',
+          path: 'src/index.tsx',
+          templateFile: 'templates/webpack/{{lowerCase framework}}/index.hbs'
         });
       }
       actions.push({
