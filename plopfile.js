@@ -117,7 +117,7 @@ export default function (plop) {
       });
       actions.push({
         type: 'add',
-        path: '.tsconfig.json',
+        path: 'tsconfig.json',
         templateFile: 'templates/webpack/{{lowerCase framework}}/{{lowerCase framework}}.tsconfig.json'
       });
       return actions;
