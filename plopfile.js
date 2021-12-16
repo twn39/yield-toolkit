@@ -46,6 +46,27 @@ export default function (plop) {
       templateFile: 'templates/git/gitignore.hbs'
     }]
   });
+  plop.setGenerator('monorepo', {
+    description: 'generate a monorepo',
+    prompts: [{
+      type: 'input',
+      name: 'project',
+      message: 'project name please'
+    },{
+      type: 'input',
+      name: 'author',
+      message: 'author name please'
+    },{
+      type: 'checkbox',
+      name: 'dir',
+      choices: ['packages/*', 'apps/*', 'libs/*', 'components/*']
+    }],
+    actions: [{
+      type: 'add',
+      path: 'package.json',
+      templateFile: 'templates/monorepo/package.json.hbs'
+    }]
+  });
   plop.setGenerator('editorconfig', {
     description: 'add .editorconfig file',
     prompts: [
