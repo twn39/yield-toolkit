@@ -1,7 +1,10 @@
 import {preactTransform, reactTransform, vueTransform} from "./transform/webpack.js";
+import {codeSplitPartial, moduleFederationPartial} from "./partial/webpack.js";
 
 export default function (plop) {
   plop.setWelcomeMessage('Yield toolkit.\r\n');
+  moduleFederationPartial(plop)
+  codeSplitPartial(plop)
   plop.setGenerator('license', {
     description: 'add license',
     prompts: [{
@@ -89,6 +92,11 @@ export default function (plop) {
       name: 'framework',
       message: 'select framework',
       choices: ["React", "Vue", "Preact"]
+    }, {
+      type: 'checkbox',
+      name: 'module',
+      message: 'select module function',
+      choices: ["ModuleFederation", "CodeSplit"]
     }],
     actions: data => {
       let actions = [];
@@ -146,7 +154,7 @@ export default function (plop) {
       actions.push({
         type: 'add',
         path: 'webpack.config.js',
-        templateFile: 'templates/webpack/{{lowerCase framework}}/{{lowerCase framework}}.hbs.js'
+        templateFile: 'templates/webpack/{{lowerCase framework}}/{{lowerCase framework}}.webpack.hbs'
       });
       actions.push({
         type: 'add',
