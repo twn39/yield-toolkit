@@ -1,6 +1,6 @@
 {
   "name": "yield-toolkit",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "A cli for generate web template.",
   "main": "index.js",
   "type": "module",
@@ -18,7 +18,8 @@
     "index.js",
     "LICENSE",
     "plopfile.js",
-    "package.json"
+    "package.json",
+    "helper.js"
   ],
   "preferGlobal": true,
   "scripts": {
