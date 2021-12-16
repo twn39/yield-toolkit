@@ -157,11 +157,23 @@ export default function (plop) {
   plop.setGenerator('vue component', {
     description: 'add vue component file',
     prompts: [{
+      type: 'input',
+      name: 'name',
+      message: 'vue component name please',
+    },{
       type: 'list',
       name: 'format',
       message: 'select format please',
-      choices: ['js', 'tsx'],
+      choices: ['js', 'ts'],
     },],
-    actions: [],
+    actions: data => {
+      let actions = [];
+      actions.push({
+        type: 'add',
+        path: '{{pascalCase name}}.vue',
+        templateFile: 'templates/vue/component.{{format}}.hbs.vue'
+      });
+      return actions;
+    }
   });
 };
