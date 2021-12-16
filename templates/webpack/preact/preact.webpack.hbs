@@ -85,16 +85,6 @@ const config = {
       directory: './dist'
     }
   },
-  plugins: [
-    {{#if module.ModuleFederation}}
-    {{> moduleFederation}}
-    {{/if}}
-    new HtmlWebpackPlugin({
-      templateContent: ({ htmlWebpackPlugin }) => '<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>' + htmlWebpackPlugin.options.title + '</title></head><body><div id=\"app\"></div></body></html>',
-      filename: 'index.html',
-    }),
-    new MiniCssExtractPlugin(),
-  ],
   resolve: {
     extensions: [
       '.tsx',
@@ -108,19 +98,23 @@ const config = {
       "react/jsx-runtime": "preact/jsx-runtime"
     }
   },
-  // 作为其他应用的依赖项时，optimization 部分不要设置
-  // optimization: {
-  //   runtimeChunk: 'single',
-  //   splitChunks: {
-  //     cacheGroups: {
-  //       vendor: {
-  //         test: /[\\/]node_modules[\\/]/,
-  //         name: 'vendors',
-  //         chunks: 'all'
-  //       }
-  //     }
-  //   }
-  // }
+  plugins: [
+    {{#each}}
+      {{#if eq this 'ModuleFederation'}}
+        {{> moduleFederation}}
+      {{/if}}
+    {{/each}}
+    new HtmlWebpackPlugin({
+      templateContent: ({ htmlWebpackPlugin }) => '<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>' + htmlWebpackPlugin.options.title + '</title></head><body><div id=\"app\"></div></body></html>',
+      filename: 'index.html',
+    }),
+    new MiniCssExtractPlugin(),
+  ],
+  {{#each}}
+    {{#if eq this 'CodeSplit'}}
+      {{> codeSplit }}
+    {{/if}}
+  {{/each}}
 };
 
 module.exports = (env, argv) => {

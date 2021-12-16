@@ -1,10 +1,12 @@
 import {preactTransform, reactTransform, vueTransform} from "./transform/webpack.js";
 import {codeSplitPartial, moduleFederationPartial} from "./partial/webpack.js";
+import {helper} from "./helper.js";
 
 export default function (plop) {
   plop.setWelcomeMessage('Yield toolkit.\r\n');
   moduleFederationPartial(plop)
   codeSplitPartial(plop)
+  helper(plop)
   plop.setGenerator('license', {
     description: 'add license',
     prompts: [{
