@@ -94,6 +94,16 @@ export default function (plop) {
           path: 'package.json',
           transform: vueTransform,
         });
+        actions.push({
+          type: 'add',
+          path: 'src/App.vue',
+          templateFile: 'templates/webpack/{{lowerCase framework}}/App.vue.hbs'
+        });
+        actions.push({
+          type: 'add',
+          path: 'src/index.js',
+          templateFile: 'templates/webpack/{{lowerCase framework}}/index.js.hbs'
+        });
       }
       actions.push({
         type: 'add',
