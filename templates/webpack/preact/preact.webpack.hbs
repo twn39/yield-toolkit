@@ -99,9 +99,9 @@ const config = {
     }
   },
   plugins: [
-    {{#each}}
-      {{#if eq this 'ModuleFederation'}}
-        {{> moduleFederation}}
+    {{#each module}}
+      {{#if (eq this 'ModuleFederation')}}
+    {{> moduleFederation}}
       {{/if}}
     {{/each}}
     new HtmlWebpackPlugin({
@@ -110,9 +110,9 @@ const config = {
     }),
     new MiniCssExtractPlugin(),
   ],
-  {{#each}}
-    {{#if eq this 'CodeSplit'}}
-      {{> codeSplit }}
+  {{#each module}}
+    {{#if (eq this 'CodeSplit')}}
+  {{> codeSplit }}
     {{/if}}
   {{/each}}
 };
