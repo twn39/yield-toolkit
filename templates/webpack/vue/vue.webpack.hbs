@@ -90,32 +90,19 @@ const config = {
       filename: 'index.html',
     }),
     new MiniCssExtractPlugin(),
-    new ModuleFederationPlugin({
-      name: 'home',
-      filename: "remoteEntry.js",
-      exposes: {
-        './App': './src/App',
-      },
-      shared: {
-        vue: { singleton: true, eager: true },
-        vuex: { singleton: true, eager: true },
-        "vue-router": { singleton: true, eager: true },
-      }
-    }),
+    {{#each module}}
+      {{#if (eq this 'ModuleFederation')}}
+    {{> moduleFederation}}
+      {{/if}}
+    {{/each}}
   ],
-  // 作为其他应用的依赖项时，optimization 部分不要设置
-  // optimization: {
-  //   runtimeChunk: 'single',
-  //   splitChunks: {
-  //     cacheGroups: {
-  //       vendor: {
-  //         test: /[\\/]node_modules[\\/]/,
-  //         name: 'vendors',
-  //         chunks: 'all'
-  //       }
-  //     }
-  //   }
-  // }
+
+  {{#each module}}
+    {{#if (eq this 'CodeSplit')}}
+  {{> codeSplit }}
+    {{/if}}
+  {{/each}}
+
   devServer: {
     hot: true,
     static: {
