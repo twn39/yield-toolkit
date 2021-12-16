@@ -1,18 +1,15 @@
 export function moduleFederationPartial(plop) {
-  plop.setPartial('moduleFederation', `
-    new ModuleFederationPlugin({
-      name: 'homepage',
-      filename: "remoteEntry.js",
-      exposes: {
-        './App': './src/App',
-      },
-    }),
-  `);
+  plop.setPartial('moduleFederation', `new ModuleFederationPlugin({
+  name: 'homepage',
+  filename: "remoteEntry.js",
+  exposes: {
+    './App': './src/App',
+  },
+}),`);
 }
 
 export function codeSplitPartial(plop) {
-  plop.setPartial('codeSplit', `
-  optimization: {
+  plop.setPartial('codeSplit', `optimization: {
     runtimeChunk: 'single',
     splitChunks: {
       cacheGroups: {
@@ -23,6 +20,5 @@ export function codeSplitPartial(plop) {
         }
       }
     }
-  },
-  `);
+  },`);
 }
