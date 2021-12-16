@@ -1,6 +1,6 @@
 {
   "name": "yield-toolkit",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "A cli for generate web template.",
   "main": "index.js",
   "type": "module",
