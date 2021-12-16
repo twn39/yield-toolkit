@@ -5,7 +5,7 @@ export function moduleFederationPartial(plop) {
   exposes: {
     './App': './src/App',
   },
-}),`);
+}),\n`);
 }
 
 export function codeSplitPartial(plop) {
@@ -20,5 +20,5 @@ export function codeSplitPartial(plop) {
         }
       }
     }
-  },`);
+  },\n`);
 }
