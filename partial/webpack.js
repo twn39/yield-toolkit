@@ -10,15 +10,15 @@ export function moduleFederationPartial(plop) {
 
 export function codeSplitPartial(plop) {
   plop.setPartial('codeSplit', `optimization: {
-    runtimeChunk: 'single',
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all'
-        }
+  runtimeChunk: 'single',
+  splitChunks: {
+    cacheGroups: {
+      vendor: {
+        test: /[\\\\/]node_modules[\\\\/]/,
+        name: 'vendors',
+        chunks: 'all'
       }
     }
-  },\n`);
+  }
+},\n`);
 }
