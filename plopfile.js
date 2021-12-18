@@ -66,11 +66,28 @@ export default function (plop) {
       name: 'dir',
       choices: ['packages/*', 'apps/*', 'libs/*', 'components/*']
     }],
-    actions: [{
-      type: 'add',
-      path: 'package.json',
-      templateFile: 'templates/monorepo/package.json.hbs'
-    }]
+    actions: data => {
+      let actions = [];
+      actions.push({
+        type: 'add',
+        path: 'package.json',
+        templateFile: 'templates/monorepo/package.json.hbs'
+      });
+      actions.push({
+        type: 'add',
+        path: 'pnpm-workspace.yaml',
+        templateFile: 'templates/monorepo/pnpm-workspace.yaml.hbs'
+      });
+      data['dir'].map(it => {
+        const dir = it.split('/')[0];
+        actions.push({
+          type: 'add',
+          path: `${dir}/.gitkeep`,
+          templateFile: 'templates/monorepo/gitkeep'
+        })
+      });
+      return actions;
+    }
   });
   plop.setGenerator('editorconfig', {
     description: 'add .editorconfig file',
