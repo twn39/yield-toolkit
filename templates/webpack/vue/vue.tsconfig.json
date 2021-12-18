@@ -7,8 +7,10 @@
     "noImplicitAny": true,
     "module": "es2020",
     "moduleResolution": "node",
-    "target": "es5",
-    "allowJs": true
+    "target": "es6",
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
     "./src/**/*"
