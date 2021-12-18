@@ -241,4 +241,21 @@ export default function (plop) {
       return actions;
     }
   });
+  plop.setGenerator('lit web component', {
+    description: 'add lit web component file',
+    prompts: [{
+      type: 'input',
+      name: 'name',
+      message: 'lit component name please',
+    }],
+    actions: data => {
+      let actions = [];
+      actions.push({
+        type: 'add',
+        path: '{{pascalCase name}}.ts',
+        templateFile: 'templates/lit/lit.element.hbs'
+      });
+      return actions;
+    }
+  });
 };
