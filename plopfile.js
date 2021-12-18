@@ -8,7 +8,7 @@ export default function (plop) {
   codeSplitPartial(plop)
   helper(plop)
   plop.setGenerator('license', {
-    description: 'add license',
+    description: 'generate license file',
     prompts: [{
       type: 'list',
       name: 'license',
@@ -30,7 +30,7 @@ export default function (plop) {
     }]
   });
   plop.setGenerator('README', {
-    description: 'add README file',
+    description: 'generate README file',
     prompts: [{
       type: 'input',
       name: 'project',
@@ -43,7 +43,7 @@ export default function (plop) {
     }]
   });
   plop.setGenerator('gitignore', {
-    description: 'add .gitignore file',
+    description: 'generate .gitignore file',
     prompts: [],
     actions: [{
       type: 'add',
@@ -90,7 +90,7 @@ export default function (plop) {
     }
   });
   plop.setGenerator('editorconfig', {
-    description: 'add .editorconfig file',
+    description: 'generate .editorconfig file',
     prompts: [
       {
         type: 'input',
@@ -105,7 +105,7 @@ export default function (plop) {
     }]
   });
   plop.setGenerator('webpack', {
-    description: 'add webpack configure file',
+    description: 'generate a webpack based project, please run npm init first',
     prompts: [{
       type: 'list',
       name: 'framework',
@@ -220,7 +220,7 @@ export default function (plop) {
     }
   });
   plop.setGenerator('vue component', {
-    description: 'add vue component file',
+    description: 'generate a vue component',
     prompts: [{
       type: 'input',
       name: 'name',
@@ -242,7 +242,7 @@ export default function (plop) {
     }
   });
   plop.setGenerator('lit web component', {
-    description: 'add lit web component file',
+    description: 'generate a lit web component',
     prompts: [{
       type: 'input',
       name: 'name',
