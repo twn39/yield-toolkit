@@ -2,6 +2,9 @@
 
 Yield-toolkit is a nodejs library for generate the templates.
 
+[![yield](https://img.shields.io/npm/v/yield-toolkit?style=flat-square)](https://www.npmjs.com/package/yield-toolkit)
+[![mit](https://img.shields.io/npm/l/nrm-next?style=flat-square)](https://github.com/twn39/yield-toolkit/blob/master/LICENSE)
+
 ## Installation
 
 npm install command:
