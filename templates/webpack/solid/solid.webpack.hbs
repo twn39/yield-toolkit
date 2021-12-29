@@ -96,7 +96,7 @@ const config = {
   plugins: [
   {{#each module}}
     {{#if (eq this 'ModuleFederation')}}
-  {{> moduleFederation}}
+    {{> moduleFederation}}
     {{/if}}
   {{/each}}
     new HtmlWebpackPlugin({
