@@ -129,9 +129,9 @@ export function solidTransform(data) {
   data['scripts'] = {
     ...data['scripts'],
     "clean": "rm dist/bundle.js",
-    "build:dev": "webpack --mode development",
-    "build:prod": "webpack --mode production",
-    "start": "webpack serve --hot --mode development"
+    "build:dev": "NODE_ENV=development webpack",
+    "build:prod": "NODE_ENV=production webpack",
+    "start": "NODE_ENV=development webpack serve --hot"
   };
   data['dependencies'] = {
     ...data['dependencies'],
