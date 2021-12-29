@@ -6,7 +6,7 @@
   "type": "module",
   "dependencies": {
     "minimist": "^1.2.5",
-    "plop": "^3.0.4"
+    "plop": "^3.0.5"
   },
   "bin": {
     "yield": "./index.js"

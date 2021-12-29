@@ -1,4 +1,4 @@
-import {preactTransform, reactTransform, vueTransform} from "./transform/webpack.js";
+import {preactTransform, reactTransform, solidTransform, vueTransform} from "./transform/webpack.js";
 import {codeSplitPartial, moduleFederationPartial} from "./partial/webpack.js";
 import {helper} from "./helper.js";
 
@@ -110,7 +110,7 @@ export default function (plop) {
       type: 'list',
       name: 'framework',
       message: 'select framework',
-      choices: ["React", "Vue", "Preact"]
+      choices: ["React", "Vue", "Preact", "Solid"]
     }, {
       type: 'checkbox',
       name: 'module',
@@ -158,6 +158,23 @@ export default function (plop) {
           type: 'modify',
           path: 'package.json',
           transform: preactTransform,
+        });
+        actions.push({
+          type: 'add',
+          path: 'src/App.tsx',
+          templateFile: 'templates/webpack/{{lowerCase framework}}/App.hbs'
+        });
+        actions.push({
+          type: 'add',
+          path: 'src/index.tsx',
+          templateFile: 'templates/webpack/{{lowerCase framework}}/index.hbs'
+        });
+      }
+      if (data['framework'] === 'Solid') {
+        actions.push({
+          type: 'modify',
+          path: 'package.json',
+          transform: solidTransform,
         });
         actions.push({
           type: 'add',
