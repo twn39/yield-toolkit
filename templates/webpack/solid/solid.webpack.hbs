@@ -4,14 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
 
-const mode = process.env.NODE_ENV || 'development';
-const prod = mode === 'production';
-
 const config = {
   entry: [
     './src/index.tsx'
   ],
-  mode,
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[contenthash].js',
@@ -92,7 +88,6 @@ const config = {
       '.json'
     ],
   },
-  devtool: prod ? false : 'eval-source-map',
   devServer: {
     port: 4200,
     'static': {
@@ -119,7 +114,12 @@ const config = {
 };
 
 module.exports = (env, argv) => {
-if (argv.hot) {
+  const mode = argv.mode;
+  const prod = mode === 'production';
+  config.mode = mode;
+  config.devtool = prod ? false : 'eval-source-map';
+
+  if (argv.hot) {
     // Cannot use 'contenthash' when hot reloading is enabled.
     config.output.filename = '[name].[fullhash].js';
   }
