@@ -87,7 +87,6 @@ export function preactTransform(data) {
   data = JSON.parse(data);
   data['scripts'] = {
     ...data['scripts'],
-    "clean": "rm dist/bundle.js",
     "build:dev": "webpack --mode development",
     "build:prod": "webpack --mode production",
     "start": "webpack serve --hot --mode development"
@@ -95,9 +94,7 @@ export function preactTransform(data) {
   data['dependencies'] = {
     ...data['dependencies'],
     "preact": "^10.3.1",
-    "preact-compat": "^3.19.0",
-    "preact-render-to-string": "^5.1.4",
-    "preact-router": "^3.2.1"
+    "preact-router": "^4.0.0"
   };
   data['devDependencies'] = {
     ...data['devDependencies'],
@@ -109,10 +106,12 @@ export function preactTransform(data) {
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.4.5",
-    "node-sass": "^6.0.1",
+    "css-minimizer-webpack-plugin": "^3.3.1",
+    "terser-webpack-plugin": "^5.3.0",
+    "node-sass": "^7.0.1",
     "sass-loader": "^12.4.0",
     "style-loader": "^3.3.1",
-    "stylus": "^0.55.0",
+    "stylus": "^0.56.0",
     "stylus-loader": "^6.2.0",
     "ts-loader": "^9.2.6",
     "typescript": "^4.5.4",
