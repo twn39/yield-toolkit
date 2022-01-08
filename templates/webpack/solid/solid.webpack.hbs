@@ -90,9 +90,14 @@ const config = {
   },
   devServer: {
     port: 4200,
-    'static': {
+    open: true,
+    static: {
       directory: './dist'
-    }
+    },
+    compress: true,
+    historyApiFallback: {
+      index: 'index.html'
+    },
   },
   plugins: [
   {{#each module}}
@@ -117,7 +122,7 @@ module.exports = (env, argv) => {
   const mode = argv.mode;
   const prod = mode === 'production';
   config.mode = mode;
-  config.devtool = prod ? false : 'eval-source-map';
+  config.devtool = prod ? false : 'source-map';
 
   if (argv.hot) {
     // Cannot use 'contenthash' when hot reloading is enabled.
