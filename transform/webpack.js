@@ -44,7 +44,6 @@ export function vueTransform(data) {
   data = JSON.parse(data);
   data['scripts'] = {
     ...data['scripts'],
-    "clean": "rm dist/bundle.js",
     "build:dev": "webpack --mode development",
     "build:prod": "webpack --mode production",
     "start": "webpack serve --hot --mode development"
@@ -61,14 +60,16 @@ export function vueTransform(data) {
     "@babel/preset-env": "^7.16.4",
     "babel-loader": "^8.2.3",
     "css-loader": "^6.5.1",
+    "css-minimizer-webpack-plugin": "^3.3.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.4.5",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.1",
     "sass-loader": "^12.3.0",
     "style-loader": "^3.3.1",
-    "stylus": "^0.55.0",
+    "stylus": "^0.56.0",
     "stylus-loader": "^6.2.0",
+    "terser-webpack-plugin": "^5.3.0",
     "ts-loader": "^9.2.6",
     "typescript": "^4.5.2",
     "url-loader": "^4.1.1",

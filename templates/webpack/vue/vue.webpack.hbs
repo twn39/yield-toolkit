@@ -3,119 +3,139 @@ const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const { ModuleFederationPlugin } = require('webpack').container;
 
 
-const config = {
-  entry: './src/index.js',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[contenthash].js'
-  },
-  mode: "development",
-  module: {
-    rules: [
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        // options: {
-        //   compilerOptions: {
-        //     isCustomElement: tag => tag.startsWith('lit-')
-        //   }
-        // }
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
-      },
-      {
-        test: /\.css$/i,
-        use: [
-          'vue-style-loader',
-          "style-loader",
-          "css-loader"
-        ],
-      },
-      {
-        test: /\.js$/,
-        use: 'babel-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.styl(us)?$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'stylus-loader'
-        ]
-      },
-      {
-        test: /\.ts(x)?$/,
-        loader: 'ts-loader',
-        exclude: /node_modules/,
-        options: {
-          appendTsSuffixTo: [
-            /\.vue$/
-          ]
-        }
-      },
-      {
-        test: /\.png$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              mimetype: 'image/png'
-            }
-          }
-        ]
-      },
-      {
-        test: /\.svg$/,
-        use: 'file-loader'
-      }
-    ]
-  },
-  resolve: {
-    extensions: [
-      '.js',
-      '.vue',
-      '.tsx',
-      '.ts'
-    ]
-  },
-  plugins: [
-    new VueLoaderPlugin(),
-    new HtmlWebpackPlugin({
-      templateContent: ({ htmlWebpackPlugin }) => '<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>' + htmlWebpackPlugin.options.title + '</title></head><body><div id=\"app\"></div></body></html>',
-      filename: 'index.html',
-    }),
-    new MiniCssExtractPlugin(),
-    {{#each module}}
-      {{#if (eq this 'ModuleFederation')}}
-    {{> moduleFederation}}
-      {{/if}}
-    {{/each}}
-  ],
+const config = (env, argv) => {
+  const mode = argv.mode;
+  const prod = mode === 'production';
 
-  {{#each module}}
-    {{#if (eq this 'CodeSplit')}}
-  {{> codeSplit }}
-    {{/if}}
-  {{/each}}
-
-  devServer: {
-    hot: true,
-    static: {
-      directory: path.join(__dirname, 'dist'),
+  return {
+    entry: './src/index.js',
+    output: {
+      path: path.resolve(__dirname, 'dist'),
+      filename: '[name].[contenthash].js',
+      clean: true,
     },
-    compress: true,
-    port: 8090,
-  },
+    mode,
+    module: {
+      rules: [
+        {
+          test: /\.vue$/,
+          loader: 'vue-loader',
+          // options: {
+          //   compilerOptions: {
+          //     isCustomElement: tag => tag.startsWith('lit-')
+          //   }
+          // }
+        },
+        {
+          test: /\.scss$/,
+          use: [
+            'vue-style-loader',
+            'css-loader',
+            'sass-loader'
+          ]
+        },
+        {
+          test: /\.css$/i,
+          use: [
+            'vue-style-loader',
+            "style-loader",
+            "css-loader"
+          ],
+        },
+        {
+          test: /\.js$/,
+          use: 'babel-loader',
+          exclude: /node_modules/
+        },
+        {
+          test: /\.styl(us)?$/,
+          use: [
+            'vue-style-loader',
+            'css-loader',
+            'stylus-loader'
+          ]
+        },
+        {
+          test: /\.ts(x)?$/,
+          loader: 'ts-loader',
+          exclude: /node_modules/,
+          options: {
+            appendTsSuffixTo: [
+              /\.vue$/
+            ]
+          }
+        },
+        {
+          test: /\.png$/,
+          use: [
+            {
+              loader: 'url-loader',
+              options: {
+                mimetype: 'image/png'
+              }
+            }
+          ]
+        },
+        {
+          test: /\.svg$/,
+          use: 'file-loader'
+        }
+      ]
+    },
+    resolve: {
+      extensions: [
+        '.js',
+        '.vue',
+        '.tsx',
+        '.ts'
+      ]
+    },
+    devtool: prod ? false : 'source-map',
+    devServer: {
+      port: 4200,
+      open: true,
+      static: {
+        directory: './dist'
+      },
+      compress: true,
+      historyApiFallback: {
+        index: 'index.html'
+      },
+    },
+    plugins: [
+      new VueLoaderPlugin(),
+      new HtmlWebpackPlugin({
+        templateContent: ({ htmlWebpackPlugin }) => '<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>' + htmlWebpackPlugin.options.title + '</title></head><body><div id=\"app\"></div></body></html>',
+        filename: 'index.html',
+      }),
+      new MiniCssExtractPlugin({
+        filename: prod ? "[name].[contenthash].css" : "[name].[fullhash].css",
+      }),
+      {{#each module}}
+      {{#if (eq this 'ModuleFederation')}}
+      {{> moduleFederation}}
+      {{/if}}
+      {{/each}}
+    ],
+    {{#each module}}
+    {{#if (eq this 'CodeSplit')}}
+    {{> codeSplit }}
+    {{/if}}
+    {{/each}}
+  };
+
 };
 
-module.exports = config;
+module.exports = (env, argv) => {
+  const result = config(env, argv);
+  if (argv.hot) {
+    // Cannot use 'contenthash' when hot reloading is enabled.
+    result.output.filename = '[name].[fullhash].js';
+  }
+  return result;
+};
