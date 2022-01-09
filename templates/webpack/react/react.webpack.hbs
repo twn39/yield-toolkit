@@ -2,123 +2,142 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const { ModuleFederationPlugin } = require('webpack').container;
 
-const config = {
-  entry: [
-    'react-hot-loader/patch',
-    './src/index.tsx'
-  ],
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[contenthash].js'
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        use: 'babel-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader'
-        ],
-        exclude: /\.module\.css$/
-      },
-      {
-        test: /\.ts(x)?$/,
-        loader: 'ts-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.styl$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'stylus-loader'
-        ]
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader'
-        ]
-      },
-      {
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              modules: true
-            }
-          }
-        ],
-        include: /\.module\.css$/
-      },
-      {
-        test: /\.svg$/,
-        use: 'file-loader'
-      },
-      {
-        test: /\.png$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              mimetype: 'image/png'
-            }
-          }
-        ]
-      }
-    ]
-  },
-  devServer: {
-    port: 4200,
-    'static': {
-      directory: './dist'
-    }
-  },
-  resolve: {
-    extensions: [
-      '.tsx',
-      '.ts',
-      '.js'
+const config = (env, argv) => {
+  const mode = argv.mode;
+  const prod = mode === 'production';
+
+  return {
+    entry: [
+      './src/index.tsx'
     ],
-    alias: {
-      'react-dom': '@hot-loader/react-dom'
-    }
-  },
-  plugins: [
-    {{#each module}}
+    mode,
+    output: {
+      path: path.resolve(__dirname, 'dist'),
+      filename: '[name].[contenthash].js',
+      clean: true,
+    },
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx)$/,
+          use: 'babel-loader',
+          exclude: /node_modules/
+        },
+        {
+          test: /\.css$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader'
+          ],
+          exclude: /\.module\.css$/
+        },
+        {
+          test: /\.ts(x)?$/,
+          loader: 'ts-loader',
+          exclude: /node_modules/
+        },
+        {
+          test: /\.styl$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            'stylus-loader'
+          ]
+        },
+        {
+          test: /\.scss$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            'sass-loader'
+          ]
+        },
+        {
+          test: /\.css$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                esModule: true,
+                modules: {
+                  namedExport: true,
+                },
+                importLoaders: 1,
+              }
+            }
+          ],
+          include: /\.module\.css$/
+        },
+        {
+          test: /\.svg$/,
+          use: 'file-loader'
+        },
+        {
+          test: /\.png$/,
+          use: [
+            {
+              loader: 'url-loader',
+              options: {
+                mimetype: 'image/png'
+              }
+            }
+          ]
+        }
+      ]
+    },
+    devtool: prod ? false : 'source-map',
+    devServer: {
+      port: 4200,
+      open: true,
+      static: {
+        directory: './dist'
+      },
+      compress: true,
+      historyApiFallback: {
+        index: 'index.html'
+      },
+    },
+    resolve: {
+      extensions: [
+        '.tsx',
+        '.ts',
+        '.js',
+        '.jsx',
+      ],
+    },
+    plugins: [
+      {{#each module}}
       {{#if (eq this 'ModuleFederation')}}
-    {{> moduleFederation}}
+      {{> moduleFederation}}
       {{/if}}
-    {{/each}}
-    new HtmlWebpackPlugin({
-      templateContent: ({ htmlWebpackPlugin }) => '<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>' + htmlWebpackPlugin.options.title + '</title></head><body><div id=\"app\"></div></body></html>',
-      filename: 'index.html',
-    }),
-    new MiniCssExtractPlugin(),
-  ],
-  {{#each module}}
+      {{/each}}
+      new HtmlWebpackPlugin({
+        templateContent: ({ htmlWebpackPlugin }) => '<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>' + htmlWebpackPlugin.options.title + '</title></head><body><div id=\"app\"></div></body></html>',
+        filename: 'index.html',
+      }),
+      new MiniCssExtractPlugin({
+        filename: prod ? "[name].[contenthash].css" : "[name].[fullhash].css",
+      }),
+    ],
+    {{#each module}}
     {{#if (eq this 'CodeSplit')}}
-  {{> codeSplit }}
+    {{> codeSplit }}
     {{/if}}
-  {{/each}}
+    {{/each}}
+
+  };
 };
 
 module.exports = (env, argv) => {
-if (argv.hot) {
+  const result = config(env, argv);
+  if (argv.hot) {
     // Cannot use 'contenthash' when hot reloading is enabled.
-    config.output.filename = '[name].[hash].js';
+    result.output.filename = '[name].[fullhash].js';
   }
-  return config;
+  return result;
 };
