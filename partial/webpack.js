@@ -10,6 +10,11 @@ export function moduleFederationPartial(plop) {
 
 export function codeSplitPartial(plop) {
   plop.setPartial('codeSplit', `optimization: {
+  minimize: prod,
+  minimizer: [
+    new TerserPlugin(),
+    new CssMinimizerPlugin(),
+  ],
   runtimeChunk: 'single',
   splitChunks: {
     cacheGroups: {

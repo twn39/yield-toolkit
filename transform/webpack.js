@@ -133,8 +133,8 @@ export function solidTransform(data) {
   };
   data['dependencies'] = {
     ...data['dependencies'],
-    "solid-app-router": "^0.1.14",
-    "solid-js": "^1.2.6",
+    "solid-app-router": "^0.2.0",
+    "solid-js": "^1.2.6"
   };
   data['devDependencies'] = {
     ...data['devDependencies'],
@@ -147,6 +147,7 @@ export function solidTransform(data) {
     "babel-loader": "^8.2.3",
     "babel-preset-solid": "^1.2.6",
     "css-loader": "^6.5.1",
+    "css-minimizer-webpack-plugin": "^3.3.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.4.5",
@@ -155,6 +156,7 @@ export function solidTransform(data) {
     "style-loader": "^3.3.1",
     "stylus": "^0.56.0",
     "stylus-loader": "^6.2.0",
+    "terser-webpack-plugin": "^5.3.0",
     "typescript": "^4.5.4",
     "url-loader": "^4.1.1",
     "webpack": "^5.65.0",
