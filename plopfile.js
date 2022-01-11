@@ -194,7 +194,7 @@ export default function (plop) {
       });
       actions.push({
         type: 'add',
-        path: 'types.d.ts',
+        path: 'src/types.d.ts',
         templateFile: 'templates/webpack/{{lowerCase framework}}/types.d.ts'
       });
       actions.push({
