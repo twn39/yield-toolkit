@@ -42,6 +42,7 @@ const config = (env, argv) => {
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: '[name].[contenthash].js',
+      assetModuleFilename: `${assetsDir}/[contenthash][ext]`,
       clean: true,
     },
     module: {
