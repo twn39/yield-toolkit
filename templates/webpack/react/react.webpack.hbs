@@ -4,6 +4,30 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
 
+
+const postcss = {
+  loader: "postcss-loader",
+  options: {
+    postcssOptions: {
+      plugins: [
+        ["postcss-preset-env"],
+      ],
+    },
+  },
+}
+
+const cssModules = {
+  loader: 'css-loader',
+  options: {
+    esModule: true,
+    modules: {
+      mode: 'local',
+      namedExport: true,
+    },
+    importLoaders: 1,
+  }
+}
+
 const config = (env, argv) => {
   const mode = argv.mode;
   const prod = mode === 'production';
@@ -17,7 +41,7 @@ const config = (env, argv) => {
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: '[name].[contenthash].js',
-      assetModuleFilename: `${assetsDir}/[contenthash][ext][query]`,
+      assetModuleFilename: `${assetsDir}/[contenthash][ext]`,
       clean: true,
     },
     module: {
@@ -28,50 +52,67 @@ const config = (env, argv) => {
           exclude: /node_modules/
         },
         {
+          test: /\.ts(x)?$/,
+          loader: 'babel-loader',
+          exclude: /node_modules/
+        },
+        {
           test: /\.css$/,
           use: [
             MiniCssExtractPlugin.loader,
-            'css-loader'
+            'css-loader',
+            postcss,
           ],
           exclude: /\.module\.css$/
         },
         {
-          test: /\.ts(x)?$/,
-          loader: 'ts-loader',
-          exclude: /node_modules/
+          test: /\.css$/,
+          use: [
+            "style-loader",
+            cssModules,
+            postcss,
+          ],
+          include: /\.module\.css$/
         },
         {
           test: /\.styl$/,
           use: [
             MiniCssExtractPlugin.loader,
             'css-loader',
-            'stylus-loader'
-          ]
+            'stylus-loader',
+            postcss,
+          ],
+          exclude: /\.module\.styl$/
+        },
+        {
+          test: /\.styl$/,
+          use: [
+            'style-loader',
+            cssModules,
+            'stylus-loader',
+            postcss,
+          ],
+          include: /\.module\.styl$/
         },
         {
           test: /\.scss$/,
           use: [
             MiniCssExtractPlugin.loader,
             'css-loader',
-            'sass-loader'
-          ]
+            'sass-loader',
+            postcss,
+          ],
+          exclude: /\.module\.scss$/
         },
         {
-          test: /\.css$/,
+          test: /\.scss$/,
           use: [
-            MiniCssExtractPlugin.loader,
-            {
-              loader: 'css-loader',
-              options: {
-                esModule: true,
-                modules: {
-                  namedExport: true,
-                },
-                importLoaders: 1,
-              }
-            }
+            'style-loader',
+            cssModules,
+            'sass-loader',
+            postcss,
           ],
-          include: /\.module\.css$/
+          include: /\.module\.scss$/
         },
         {
           test: /\.svg$/,
@@ -81,7 +122,7 @@ const config = (env, argv) => {
           test: /\.(png|jpeg|jpg|webp)$/,
           type: 'asset/resource',
           generator: {
-            filename: `${assetsDir}/images/[contenthash][ext][query]`
+            filename: `${assetsDir}/images/[contenthash][ext]`
           },
         }
       ]
@@ -125,7 +166,6 @@ const config = (env, argv) => {
     {{> codeSplit }}
     {{/if}}
     {{/each}}
-
   };
 };
 
