@@ -194,6 +194,11 @@ export default function (plop) {
       });
       actions.push({
         type: 'add',
+        path: 'types.d.ts',
+        templateFile: 'templates/webpack/{{lowerCase framework}}/types.d.ts'
+      });
+      actions.push({
+        type: 'add',
         path: '.babelrc',
         templateFile: 'templates/webpack/{{lowerCase framework}}/{{lowerCase framework}}.babelrc.hbs'
       });
