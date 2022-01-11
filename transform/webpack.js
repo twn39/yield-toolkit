@@ -144,7 +144,9 @@ export function solidTransform(data) {
     "babel-loader": "^8.2.3",
     "babel-preset-solid": "^1.2.6",
     "css-loader": "^6.5.1",
-    "file-loader": "^6.2.0",
+    "postcss": "^8.4.5",
+    "postcss-loader": "^6.2.1",
+    "postcss-preset-env": "^7.2.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.4.5",
     "node-sass": "^7.0.1",
@@ -153,7 +155,6 @@ export function solidTransform(data) {
     "stylus": "^0.56.0",
     "stylus-loader": "^6.2.0",
     "typescript": "^4.5.4",
-    "url-loader": "^4.1.1",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.7.1"
