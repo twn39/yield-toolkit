@@ -14,10 +14,11 @@ export function reactTransform(data, params) {
   data['devDependencies'] = {
     ...data['devDependencies'],
     "@babel/core": "^7.16.0",
+    "@babel/runtime": "^7.16.7",
+    "@babel/plugin-transform-runtime": "^7.16.10",
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-react": "^7.16.0",
     "@babel/preset-typescript": "^7.16.7",
-    "@types/mini-css-extract-plugin": "~2.4.0",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "babel-loader": "^8.2.3",
@@ -97,6 +98,8 @@ export function preactTransform(data) {
   data['devDependencies'] = {
     ...data['devDependencies'],
     "@babel/core": "^7.16.5",
+    "@babel/runtime": "^7.16.7",
+    "@babel/plugin-transform-runtime": "^7.16.10",
     "@babel/plugin-transform-react-jsx": "^7.16.5",
     "@babel/preset-react": "^7.16.5",
     "@babel/preset-typescript": "^7.16.7",
@@ -136,6 +139,8 @@ export function solidTransform(data) {
   data['devDependencies'] = {
     ...data['devDependencies'],
     "@babel/core": "^7.16.5",
+    "@babel/runtime": "^7.16.7",
+    "@babel/plugin-transform-runtime": "^7.16.10",
     "@babel/plugin-proposal-class-properties": "^7.16.5",
     "@babel/plugin-proposal-object-rest-spread": "^7.16.5",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
