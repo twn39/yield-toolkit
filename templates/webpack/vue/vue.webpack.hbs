@@ -9,12 +9,14 @@ const { ModuleFederationPlugin } = require('webpack').container;
 const config = (env, argv) => {
   const mode = argv.mode;
   const prod = mode === 'production';
+  const assetsDir = 'assets';
 
   return {
     entry: './src/index.js',
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: '[name].[contenthash].js',
+      assetModuleFilename: `${assetsDir}/[contenthash][ext]`,
       clean: true,
     },
     mode,
@@ -69,20 +71,16 @@ const config = (env, argv) => {
           }
         },
         {
-          test: /\.png$/,
-          use: [
-            {
-              loader: 'url-loader',
-              options: {
-                mimetype: 'image/png'
-              }
-            }
-          ]
+          test: /\.svg$/,
+          type: 'asset/inline',
         },
         {
-          test: /\.svg$/,
-          use: 'file-loader'
-        }
+          test: /\.(png|jpeg|jpg|webp)$/,
+          type: 'asset/resource',
+          generator: {
+            filename: `${assetsDir}/images/[contenthash][ext]`
+          },
+        },
       ]
     },
     resolve: {

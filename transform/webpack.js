@@ -72,7 +72,7 @@ export function vueTransform(data) {
     "ts-loader": "^9.2.6",
     "typescript": "^4.5.2",
     "url-loader": "^4.1.1",
-    "vue-loader": "^16.8.3",
+    "vue-loader": "^17.0.0",
     "vue-style-loader": "^4.1.3",
     "vue-template-compiler": "^2.6.14",
     "webpack": "^5.64.4",
@@ -133,7 +133,7 @@ export function solidTransform(data) {
   };
   data['dependencies'] = {
     ...data['dependencies'],
-    "solid-app-router": "^0.2.0",
+    "solid-app-router": "^0.3.0",
     "solid-js": "^1.2.6"
   };
   data['devDependencies'] = {
