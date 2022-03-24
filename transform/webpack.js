@@ -31,7 +31,7 @@ export function reactTransform(data, params) {
     "postcss-preset-env": "^7.2.0",
     "sass-loader": "^12.3.0",
     "style-loader": "^3.3.1",
-    "stylus": "^0.56.0",
+    "stylus": "^0.57.0",
     "stylus-loader": "^6.2.0",
     "typescript": "^4.5.2",
     "webpack": "^5.64.4",

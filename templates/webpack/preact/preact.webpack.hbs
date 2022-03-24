@@ -111,11 +111,7 @@ const config = (env, argv) => {
           include: /\.module\.scss$/
         },
         {
-          test: /\.svg$/,
-          type: 'asset/inline',
-        },
-        {
-          test: /\.(png|jpeg|jpg|webp)$/,
+          test: /\.(png|jpeg|jpg|webp|svg)$/,
           type: 'asset/resource',
           generator: {
             filename: `${assetsDir}/images/[contenthash][ext]`
