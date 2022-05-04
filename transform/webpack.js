@@ -8,35 +8,38 @@ export function reactTransform(data, params) {
   };
   data['dependencies'] = {
     ...data['dependencies'],
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   };
   data['devDependencies'] = {
     ...data['devDependencies'],
-    "@babel/core": "^7.16.0",
-    "@babel/runtime": "^7.16.7",
-    "@babel/plugin-transform-runtime": "^7.16.10",
-    "@babel/preset-env": "^7.16.4",
-    "@babel/preset-react": "^7.16.0",
+    "@babel/core": "^7.17.10",
+    "@babel/plugin-transform-runtime": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
-    "@types/react": "^17.0.37",
-    "@types/react-dom": "^17.0.11",
-    "babel-loader": "^8.2.3",
-    "css-loader": "^6.5.1",
+    "@babel/runtime": "^7.17.9",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.5",
+    "@svgr/webpack": "^6.2.1",
+    "@types/react": "^18.0.8",
+    "@types/react-dom": "^18.0.3",
+    "babel-loader": "^8.2.5",
+    "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
-    "mini-css-extract-plugin": "^2.5.3",
+    "mini-css-extract-plugin": "^2.6.0",
     "node-sass": "^7.0.1",
-    "postcss": "^8.4.5",
+    "postcss": "^8.4.13",
     "postcss-loader": "^6.2.1",
-    "postcss-preset-env": "^7.2.0",
-    "sass-loader": "^12.3.0",
+    "postcss-preset-env": "^7.5.0",
+    "react-refresh": "^0.13.0",
+    "sass-loader": "^12.6.0",
     "style-loader": "^3.3.1",
     "stylus": "^0.57.0",
     "stylus-loader": "^6.2.0",
-    "typescript": "^4.5.2",
-    "webpack": "^5.64.4",
-    "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.6.0"
+    "typescript": "^4.6.4",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1"
   }
   return JSON.stringify(data, null, 2);
 }

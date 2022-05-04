@@ -3,6 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 
 const postcss = {
@@ -42,14 +43,16 @@ const config = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.(js|jsx)$/,
-          use: 'babel-loader',
-          exclude: /node_modules/
-        },
-        {
-          test: /\.ts(x)?$/,
-          loader: 'babel-loader',
-          exclude: /node_modules/
+          test: /\.(ts|js|tsx|jsx)$/,
+          exclude: /node_modules/,
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                plugins: [(!prod) && require.resolve('react-refresh/babel')].filter(Boolean),
+              }
+            }
+          ]
         },
         {
           test: /\.css$/,
@@ -118,7 +121,7 @@ const config = (env, argv) => {
         }
       ]
     },
-    devtool: prod ? false : 'source-map',
+    devtool: prod ? false : 'eval-cheap-source-map',
     devServer: {
       port: 4200,
       open: true,
@@ -161,7 +164,15 @@ const config = (env, argv) => {
 };
 
 module.exports = (env, argv) => {
+  const mode = argv.mode;
+  const prod = mode === 'production';
   const result = config(env, argv);
+  if (!prod) {
+    result.plugins = [
+      new ReactRefreshWebpackPlugin(),
+      ...result.plugins,
+    ]
+  }
   if (argv.hot) {
     // Cannot use 'contenthash' when hot reloading is enabled.
     result.output.filename = '[name].[fullhash].js';
